@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crud
+  labels:
+    run: crud
+spec:
+  selector:
+    matchLabels:
+      app: crud
+  template:
+    metadata:
+      labels:
+        app: crud
+    spec:
+      containers:
+      - name: pythoncrud
+        image: akjain1996/crud
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flaskcrudservice
+  labels:
+    app: crud
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 5000
+    nodePort: 30050
+  selector:
+    app: crud

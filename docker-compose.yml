@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  web:
+    build: .
+    links:
+      - mysqldb
+    ports:
+      - '5000:5000'
+    networks:
+      - default
+
+  mysqldb:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: akhil
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: crud
+    networks:
+      - default
+    cap_add:
+      - SYS_NICE
